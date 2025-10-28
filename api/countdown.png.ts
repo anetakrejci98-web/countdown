@@ -1,10 +1,10 @@
 import { createCanvas } from '@napi-rs/canvas';
 import dayjs from 'dayjs';
-import utc from 'dayjs-plugin-utc';
-import tz from 'dayjs-plugin-timezone';
+import utc from 'dayjs/plugin/utc.js';
+import timezone from 'dayjs/plugin/timezone.js';
 
-dayjs.extend(utc as any);
-dayjs.extend(tz as any);
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 // Cíl: 6. 11. 2025 08:00 Europe/Prague
 const TARGET = dayjs.tz('2025-11-06 08:00', 'Europe/Prague');
@@ -17,7 +17,6 @@ export default async function handler(req: any, res: any) {
 
   ctx.clearRect(0, 0, width, height);
 
-  // Výpočet zbývajícího času
   const now = dayjs();
   let diff = TARGET.diff(now, 'second');
   if (diff < 0) diff = 0;
@@ -53,7 +52,6 @@ export default async function handler(req: any, res: any) {
     ctx.restore();
   };
 
-  // Rozložení: DNY / HOD / MIN
   const colW = width / 3;
   const topNum = 6;
   const topLabel = 54;
@@ -67,7 +65,7 @@ export default async function handler(req: any, res: any) {
   drawNeon(mins.toString().padStart(2, '0'), colW * 2.5, topNum);
   drawLabel('MIN', colW * 2.5, topLabel);
 
-  // Jemný „grain“
+  // jemný grain
   ctx.save();
   ctx.globalAlpha = 0.06;
   for (let i = 0; i < 500; i++) {
@@ -82,5 +80,5 @@ export default async function handler(req: any, res: any) {
   const buffer = await canvas.encode('png');
   res.setHeader('Content-Type', 'image/png');
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.status(200).send(buffer);
+  res.status(200).end(buffer);
 }
