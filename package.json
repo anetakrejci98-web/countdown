@@ -2,9 +2,8 @@
   "name": "exalted-countdown",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=18" },
   "dependencies": {
-    "@napi-rs/canvas": "^0.1.58",
+    "@vercel/og": "0.6.2",
     "dayjs": "^1.11.10"
   }
 }
