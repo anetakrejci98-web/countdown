@@ -1,0 +1,11 @@
+{
+  "name": "exalted-countdown",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.58",
+    "dayjs": "^1.11.10",
+    "dayjs-plugin-utc": "^0.1.2",
+    "dayjs-plugin-timezone": "^0.1.2"
+  }
+}
